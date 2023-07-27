@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update JSON </title>
+</head>
+<body>
+    <h1>Current JSON </h1>
+    <pre>{{ result }}</pre>
+
+    <h2>Update JSON Form</h2>
+    <form method="POST" action="{{ url_for('update_json') }}">
+        <label for="key">Key:</label>
+        <input type="text" name="key" required>
+        <label for="value">Value:</label>
+        <input type="text" name="value" required>
+        <input type="submit" value="Update">
+    </form>
+
+    <form method="POST" action="{{ url_for('update_json2') }}">
+        <label for="key">Key:</label>
+        <input type="text" name="key" required>
+        <label for="value">Value:</label>
+        <input type="text" name="value" required>
+        <input type="submit" value="Update">
+    </form>
+    <a href="{{ url_for('insert') }}"><button type="submit" value="insert">insert</button></a>
+    <a href="{{ url_for('clear') }}"><button type="submit" value="clear">clear</button></a>
+</body>
+
+</html>
