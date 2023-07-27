@@ -1,7 +1,21 @@
 from flask import Flask, render_template, request, session, redirect, url_for, jsonify
+from flask_session import Session
+import redis
 
 app = Flask(__name__)
 app.secret_key = 'e824ba3c-dd15-4e0b-9cf7-768ab0be5312'
+
+# Configure Flask-Session to use Redis for session storage
+app.config['SESSION_TYPE'] = 'redis'
+app.config['SESSION_PERMANENT'] = True
+app.config['SESSION_USE_SIGNER'] = True
+
+# Create a Redis connection
+redis_url = 'redis://localhost:6379/0'  # Replace with your Redis server URL
+app.config['SESSION_REDIS'] = redis.StrictRedis.from_url(redis_url)
+
+# Initialize Flask-Session
+Session(app)
 
 # Dummy JSON data to be stored in the session
 initial_result = {
@@ -16,6 +30,8 @@ def before_first_request():
 
 @app.route('/')
 def index():
+    # Store some data in the session
+    session['key'] = 'value'
     return render_template('index.html', result=session['result'])
 
 @app.route('/update', methods=['POST'])
